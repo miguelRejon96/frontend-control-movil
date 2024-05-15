@@ -6,7 +6,7 @@ import MainLayout from "../layout/MainLayout";
 import ErrorPage from "../layout/error-page";
 import Account from "../pages/Account";
 import Documentation from "../pages/Documentation";
-import Devices from "../pages/Devices/Devices";
+import Devices from "../pages/Devices/DevicesContent";
 import LoadingPage from "../layout/LoadingPage";
 
 const HomePage = lazy(() => import("../pages/Home"));

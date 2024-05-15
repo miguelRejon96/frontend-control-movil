@@ -14,7 +14,7 @@ const Table: FC<iProps> = (props) => {
           <thead className="text-xs rounded-lg text-gray-500 uppercase bg-gray-100">
             <tr className="">
               {props.headers.map((header, index) => (
-                <th key={index} className="py-3 px-2">
+                <th key={index} className="py-3  px-2 ">
                   {header}
                 </th>
               ))}

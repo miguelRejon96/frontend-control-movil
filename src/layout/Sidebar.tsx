@@ -1,8 +1,8 @@
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
-  BackpackIcon,
   DashboardIcon,
+  MobileIcon,
 } from "@radix-ui/react-icons";
 import { useAuth } from "@/hooks/useAuth";
 import { FC, ReactNode, useState } from "react";
@@ -52,7 +52,7 @@ export default function Sidebar() {
               text="Equipos"
               expanded={expanded}
             >
-              <BackpackIcon className="h-4 w-7" />
+              <MobileIcon className="h-4 w-7" />
             </SideBarItem>
           </ul>
         </div>
