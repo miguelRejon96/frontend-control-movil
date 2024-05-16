@@ -7,14 +7,15 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import { BellIcon } from "@radix-ui/react-icons";
 
 type iProps = {
-  accion: () => void;
+  accion?: () => void;
   label: string;
   loading?: boolean;
+  icon?: JSX.Element;
   type: "dark" | "secondary" | "info" | "success" | "danger" | "warning";
 };
 
 type iPropsIcon = {
-  accion: () => void;
+  accion?: () => void;
   label: string;
   loading?: boolean;
   type: "dark" | "secondary" | "info" | "success" | "danger" | "warning";
@@ -56,6 +57,7 @@ const ButtonLarge: FC<iProps> = (props) => {
       <Button
         className={`${bgColorClass} ${bgColorClassHover} w-full`}
         onClick={props.accion}
+        disabled={props.loading}
       >
         {props.loading ? (
           <>
@@ -63,9 +65,10 @@ const ButtonLarge: FC<iProps> = (props) => {
             Cargando...
           </>
         ) : (
-          <>
-            <div className="flex items-center gap-2">{props.label}</div>
-          </>
+          <div className="flex  items-center gap-2">
+            {props.icon}
+            <div className="">{props.label}</div>
+          </div>
         )}
       </Button>
     </div>
