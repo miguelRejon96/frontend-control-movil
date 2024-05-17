@@ -1,34 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { listDevices } from '@/api/devices.api';
+import { useQuery } from '@tanstack/react-query';
 import { Table } from '@/components/Table';
 import { Subtitle, TextTitle } from '@/components/Text';
 import { EyeOpenIcon, MagnifyingGlassIcon, Pencil2Icon } from '@radix-ui/react-icons';
-import { NewDevice } from '@/types';
 import { Button } from '@/components/ui/button';
 import { DialogForm } from '@/components/Dialog';
 import FormAddDevice from './components/FormAddDevice';
+import { Device } from '@/types';
 
 export default function DevicesContent() {
 
     const [openDialog, setOpenDialog] = useState(false)
 
+    //Consulta a API 
+    const { isLoading, data, isError, error } = useQuery({
+        queryKey: ['devices'],
+        queryFn: listDevices
+    })
+    if (isError) {
+        return <div>Error: {error.message}</div>
+    }
 
 
-    const [devices, setDevices] = useState<NewDevice[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        listDevices(0)
-            .then(data => {
-                setDevices(data);
-            })
-            .catch(error => {
-                console.error('Error fetching devices:', error);
-            })
-            .finally(() => {
-                setLoading(false);
-            })
-    }, []);
 
 
     return (
@@ -70,37 +64,38 @@ export default function DevicesContent() {
                         />
                     </div>
                 </div>
-                {loading ? (
+                {isLoading ? (
                     <p>Cargando...</p>
                 ) : (
                     <Table
                         headers={['Marca', 'Modelo', 'No. Serie', 'No. Tel.', 'Status', ""]}
                     >
-                        {devices.map((device, index) => (
-                            <tr key={index}
+                        {data?.map((devices: Device) =>
+                            <tr
+                                key={data.id}
                                 className="border-b border-dashed   hover:bg-gray-200 text-gray-900 hover:text-gray-600 dark:text-gray-900"
                             >
-                                <td className="p-2 font-medium text-xs">{device.brand}</td>
-                                <td className="p-2 font-medium text-xs">{device.model}</td>
-                                <td className="p-2 font-medium text-xs">{device.serial_number}</td>
-                                <td className="p-2 font-medium text-xs">{device.cellphone_number}</td>
+                                <td className="p-2 font-medium text-xs">{devices.brand}</td>
+                                <td className="p-2 font-medium text-xs">{devices.model}</td>
+                                <td className="p-2 font-medium text-xs">{devices.serial_number}</td>
+                                <td className="p-2 font-medium text-xs">{devices.cellphone_number}</td>
                                 <td className="p-2 items-center font-medium text-xs">
-                                    {device.status == "Activo" ? (
+                                    {devices.status == "Activo" && (
                                         <p className="inline-flex items-center gap-x-1.5 line-clamp-1 py-1 px-3 rounded-sm text-xs bg-green-500 text-white dark:bg-white dark:text-neutral-800">
                                             Activo
                                         </p>
-                                    ) : ("")}
-                                    {device.status == "Baja" ? (
+                                    )}
+                                    {devices.status == "Baja" && (
                                         <p className="inline-flex items-center gap-x-1.5 line-clamp-1 py-1 px-3 rounded-sm text-xs bg-red-500 text-white dark:bg-white dark:text-neutral-800">
                                             Baja
                                         </p>
-                                    ) : ("")}
+                                    )}
                                 </td>
                                 <td>
                                     <button
                                         className="bg-red-800 text-white rounded-full p-2 z-99999"
                                     >
-                                        <Pencil2Icon/>
+                                        <Pencil2Icon />
                                     </button>
                                     <button
                                         className='bg-red-800 text-white rounded-full p-2 z-99999'
@@ -109,7 +104,7 @@ export default function DevicesContent() {
                                     </button>
                                 </td>
                             </tr>
-                        ))}
+                        )}
                     </Table>
                 )}
             </div>

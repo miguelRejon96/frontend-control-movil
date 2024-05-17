@@ -1,3 +1,4 @@
+
 type User = {
   email: string;
   estatus: string;
@@ -11,26 +12,40 @@ export type JsonData = {
   exp: number;
 };
 
-export type NewDevice = {
+export type Device = {
   _id: string;
   brand: string;
   model: string;
   serial_number: string;
   cellphone_carrier:string;
-  cellphone_number: number;
+  cellphone_number: string;
   processor: string;
-  ram_storage: number;
-  storage: number;
+  ram_storage: string;
+  storage: string;
   os: string;
   status: string
 }
+
+export type InputsNewDevice = {
+  brand: string;
+  model: string;
+  serial_number: string;
+  cellphone_carrier:string;
+  cellphone_number: string;
+  processor: string;
+  ram_storage: string;
+  storage: string;
+  os: string;
+  status: string
+}
+
 
 export type response = {
   data: string;
 }
 
 export type PaginationType = {
-  items: NewDevice[];
+  items: Device[];
   totalPages: number;
 }
 
