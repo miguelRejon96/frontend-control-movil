@@ -4,15 +4,18 @@ import { Input } from "@/components/ui/input";
 import { Pencil2Icon } from "@radix-ui/react-icons";
 import { InputsNewDevice } from "@/types";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 export default function FormAddDevice() {
 
     const { register, handleSubmit } = useForm<InputsNewDevice>()
+    const [devices, setDevices] = useState<InputsNewDevice[]>([]);
 
     const onSubmit = handleSubmit(async(data) => {
         try {
             const newDevice = await insertDevice(data);
             console.log('Dispositivo insertado:', newDevice)
+            setDevices([...devices, newDevice]);
         } catch (error) {
             console.log('Error:',error)
         }
@@ -20,7 +23,7 @@ export default function FormAddDevice() {
 
     return (
         <div>
-            <form onSubmit={onSubmit}>
+            <form>
                 <div className="w-full  gap-5 items-center space-y-4">
                     <div className="flex items-center space-x-3">
                         <label className="font-medium text-sm color w-[150px]" htmlFor="brand">
@@ -119,7 +122,7 @@ export default function FormAddDevice() {
                     <ButtonLarge
                         label="Guardar"
                         type="dark"
-                        accion={() => onSubmit}
+                        accion={onSubmit}
                         icon={<Pencil2Icon />}
                     />
                 </div>

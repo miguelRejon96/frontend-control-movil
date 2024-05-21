@@ -13,7 +13,7 @@ export type JsonData = {
 };
 
 export type Device = {
-  _id: string;
+  id: string;
   brand: string;
   model: string;
   serial_number: string;

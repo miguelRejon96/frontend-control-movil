@@ -12,6 +12,7 @@ import { Device } from '@/types';
 export default function DevicesContent() {
 
     const [openDialog, setOpenDialog] = useState(false)
+    const [openDialogDevice, setOpenDialogDevice] = useState(false)
 
     //Consulta a API 
     const { isLoading, data, isError, error } = useQuery({
@@ -67,6 +68,7 @@ export default function DevicesContent() {
                 {isLoading ? (
                     <p>Cargando...</p>
                 ) : (
+                <div>
                     <Table
                         headers={['Marca', 'Modelo', 'No. Serie', 'No. Tel.', 'Status', ""]}
                     >
@@ -99,13 +101,24 @@ export default function DevicesContent() {
                                     </button>
                                     <button
                                         className='bg-red-800 text-white rounded-full p-2 z-99999'
+                                        onClick = {() => setOpenDialog(true)}
                                     >
                                         <EyeOpenIcon />
                                     </button>
+                                    <DialogForm
+                                        open={openDialogDevice}
+                                        setOpenDialog={setOpenDialogDevice}
+                                        titulo="Nueva oportunidad"
+                                        subtitle="Ingrese la oportunidad de negocio, todos los campos son obligarios"
+                                        children={
+                                            <FormAddDevice/>
+                                        }
+                                    />
                                 </td>
                             </tr>
                         )}
                     </Table>
+                </div>    
                 )}
             </div>
         </>
