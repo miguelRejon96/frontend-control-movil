@@ -3,7 +3,7 @@ import axios from "axios";
 const token = localStorage.getItem("user");
 
 const appsApi = axios.create({
-  baseURL: "https://apiprospeccion-production.up.railway.app/api",
+  baseURL: "https://apiprospeccion.cicsagruas.com/api",
 });
 
 appsApi.interceptors.request.use((config) => {
